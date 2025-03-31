@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APTPKGS=$(grep -vE '^#.*$' -vE '^\s*$' aptpkgs | sed 's/\n/ /g')
+APTPKGS=$(grep -vE '^#.*$|^\s*$' aptpkgs | sed 's/\n/ /g')
 # May need to split string later if there are too many packages
 
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
@@ -12,13 +12,17 @@ sudo install lazygit -D -t /usr/local/bin/
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update && apt install -y neovim
 
-apt install -y ${APTPKGS}
-apt install python3-neovim
+sudo apt install -y ${APTPKGS}
+sudo apt install python3-neovim
 # Need npm mermaid packages for mmdc
-npm install -g @mermaid-js/mermaid-cli
-npm install -g neovim
+sudo npm install -g @mermaid-js/mermaid-cli
+sudo npm install -g neovim
 
 tempfile=$(mktemp) &&
   curl -o "$tempfile" "https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo" &&
-  tic -x -o ~/.terminfo "$tempfile" &&
+  sudo tic -x -o /etc/terminfo "$tempfile" &&
   rm "$tempfile"
+
+# Cleanup
+
+rm -f lazygit*
