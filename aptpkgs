@@ -6,9 +6,9 @@ imagemagick
 tree-sitter-cli
 # Neovim: Other requirements
 ripgrep
-fdfind
+luarocks
+fd-find
 
 # Useful Pkgs
-lazygit
 fzf
 tldr
