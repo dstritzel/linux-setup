@@ -10,3 +10,4 @@ sudo apt update && apt install -y neovim
 apt install -y $APTPKGS
 
 # Need npm mermaid packages for mmdc
+npm install -g @mermaid-js/mermaid-cli
