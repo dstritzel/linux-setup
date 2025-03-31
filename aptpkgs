@@ -1,0 +1,14 @@
+## Script should remove all lines starting with # and all blank lines. 
+## It should then concat all lines into a space delimated string
+# neovim: needed for convert
+imagemagick
+# neovim: needed for lazygit stuff
+tree-sitter-cli
+# Neovim: Other requirements
+ripgrep
+fdfind
+
+# Useful Pkgs
+lazygit
+fzf
+tldr
