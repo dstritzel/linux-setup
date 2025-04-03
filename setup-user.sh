@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO: Consider Using .env file and generate values from there
 GIT_USER="dstritzel"
 
 # TODO: Double check zsh location then set
@@ -17,6 +18,6 @@ fi
 cp ssh/config ~/.ssh/
 
 # Only run if not system user
-if [[ $EUID > 999 ]]; then
-  curl https://github.com/dstritzel.keys | tee -a ~/.ssh/authroized_keys
+if [[ $EUID -gt 999 ]]; then
+  curl https://github.com/${GIT_USER}.keys | tee -a ~/.ssh/authroized_keys
 fi
