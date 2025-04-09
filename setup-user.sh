@@ -22,7 +22,7 @@ cp ssh/config ~/.ssh/
 curl https://github.com/${GIT_USER}.keys | tee -a ~/.ssh/authorized_keys
 #fi
 
-## Kitty Install
+## Kitty Install - Ubuntu 24.04 Kitty is borked with nvim
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
 cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
@@ -30,3 +30,15 @@ cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/appli
 sed -i "s|Icon=kitty|Icon=$(readlink -f ~)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
 sed -i "s|Exec=kitty|Exec=$(readlink -f ~)/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
 echo 'kitty.desktop' >~/.config/xdg-terminals.list
+
+# Pyenv
+curl -fsSL https://pyenv.run | bash
+
+# NVM and Node
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+nvm install --lts
+nvm use --lts
+
+# Setup GIT
+git config --global user.name "${GIT_USER}"
+git config --global user.email "${GIT_USER}@users.noreply.github.com"

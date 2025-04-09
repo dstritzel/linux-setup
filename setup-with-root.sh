@@ -14,7 +14,7 @@ packages=(
   npm
   gh
   python3-neovim
-
+  direnv
 )
 
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
@@ -26,8 +26,8 @@ sudo install lazygit -D -t /usr/local/bin/
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update && apt install -y neovim
 
-for package in ${packages[@]}; do
-  sudo apt install -y ${package}
+for package in "${packages[@]}"; do
+  sudo apt install -y "${package}"
 done
 
 # Need npm mermaid packages for mmdc
