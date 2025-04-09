@@ -24,7 +24,7 @@ sudo install lazygit -D -t /usr/local/bin/
 
 # Use unstable because a version >= 10.0 is required for neovim
 sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt update && apt install -y neovim
+sudo apt update && sudo apt install -y neovim
 
 for package in "${packages[@]}"; do
   sudo apt install -y "${package}"
