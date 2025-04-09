@@ -111,11 +111,13 @@ fi
 #
 alias edit=$EDITOR
 
-export KUBECONFIG="/mnt/c/Users/DerekStritzel/.kube/config"
-export AWS_CONFIG_FILE="/mnt/c/Users/DerekStritzel/.aws/config"
-export AWS_PROFILE="GBE-Prod"
-export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+## WSL Section
 
-alias open='cmd.exe /C start'
-alias ssh='ssh.exe'
-alias ssh-add='ssh-add.exe'
+#export KUBECONFIG="/mnt/c/Users/%WindowsUser%/.kube/config"
+#export AWS_CONFIG_FILE="/mnt/c/Users/%WindowsUser%/.aws/config"
+#export AWS_PROFILE="GBE-Prod"
+#export BROWSER="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+
+#alias open='cmd.exe /C start'
+#alias ssh='ssh.exe'
+#alias ssh-add='ssh-add.exe'

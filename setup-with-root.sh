@@ -1,7 +1,21 @@
 #!/bin/bash
 
-APTPKGS=$(grep -vE '^#.*$|^\s*$' aptpkgs | sed 's/\n/ /g')
-# May need to split string later if there are too many packages
+packages=(
+  htop
+  btop
+  fzf
+  tldr
+  imagemagick
+  tree-sitter-cli
+  ripgrep
+  luarocks
+  fd-find
+  nodejs
+  npm
+  gh
+  python3-neovim
+
+)
 
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | \grep -Po '"tag_name": *"v\K[^"]*')
 curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/download/v${LAZYGIT_VERSION}/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
@@ -12,8 +26,10 @@ sudo install lazygit -D -t /usr/local/bin/
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update && apt install -y neovim
 
-sudo apt install -y ${APTPKGS}
-sudo apt install python3-neovim
+for package in ${packages[@]}; do
+  sudo apt install -y ${package}
+done
+
 # Need npm mermaid packages for mmdc
 sudo npm install -g @mermaid-js/mermaid-cli
 sudo npm install -g neovim
