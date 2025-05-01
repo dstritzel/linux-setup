@@ -2,16 +2,20 @@
 
 # TODO: Consider Using .env file and generate values from there
 GIT_USER=${GIT_USER:-"dstritzel"}
+BREW_PACKAGES=${BREW_PACKAGES:-"pyenv pyenv-virtualenv nvm neovim gh neovim"}
 PYTHON_VERSION=${PYTHON_VERSION:-"3.13.3"}
-NODE_VERSION=${NODE_VERSION:-"--lts"}
-BREW_PACKAGES=${BREW_PACKAGES:-"pyenv pyenv-virtualenv nvm neovim gh"}
 PIP_PACKAGES=${PIP_PACKAGES:-"neovim"}
+NODE_PACKAGES=${NODE_PACKAGES:-"neovim"}
+NODE_VERSION=${NODE_VERSION:-"--lts"}
+INSTALL_KITTY=${INSTALL_KITTY:="true"}
 
+# TODO, Grab packages from a package file
+# I.E. brew_packages, python_packages(mybe justa requirements file), node_packages
 # Output Configs/Env
+
 echo "Github User: $GIT_USER"
 echo "Python Version: $PYTHON_VERSION"
-
-exit
+# TODO: List packages that will be installed
 
 # Install OMZ info
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -21,17 +25,20 @@ cp omz/zprofile $HOME/.zprofile
 
 # Install Brew
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  # TODO: Skip Kitty if there is no GUI
-  ## Kitty Install - Ubuntu 24.04 Kitty is borked with nvim
-  curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-  ln -sf $HOME/.local/kitty.app/bin/kitty $HOME/.local/kitty.app/bin/kitten $HOME/.local/bin/
-  cp $HOME/.local/kitty.app/share/applications/kitty.desktop $HOME/.local/share/applications/
-  cp $HOME/.local/kitty.app/share/applications/kitty-open.desktop $HOME/.local/share/applications/
-  sed -i "s|Icon=kitty|Icon=$(readlink -f $HOME)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" $HOME/.local/share/applications/kitty*.desktop
-  sed -i "s|Exec=kitty|Exec=$(readlink -f $HOME)/.local/kitty.app/bin/kitty|g" $HOME/.local/share/applications/kitty*.desktop
-  echo 'kitty.desktop' >$HOME/.config/xdg-terminals.list
+
   # Homebrew Install - We don't want to require root without good reason
   git checkout https://github.com/Homebrew/brew $HOME/.linuxbrew
+
+  ## Kitty Install - Ubuntu 24.04 Kitty is borked with nvim
+  if [[ "${INSTALL_KITTY}" == "true"]]; then
+    curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+    ln -sf $HOME/.local/kitty.app/bin/kitty $HOME/.local/kitty.app/bin/kitten $HOME/.local/bin/
+    cp $HOME/.local/kitty.app/share/applications/kitty.desktop $HOME/.local/share/applications/
+    cp $HOME/.local/kitty.app/share/applications/kitty-open.desktop $HOME/.local/share/applications/
+    sed -i "s|Icon=kitty|Icon=$(readlink -f $HOME)/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" $HOME/.local/share/applications/kitty*.desktop
+    sed -i "s|Exec=kitty|Exec=$(readlink -f $HOME)/.local/kitty.app/bin/kitty|g" $HOME/.local/share/applications/kitty*.desktop
+    echo 'kitty.desktop' >$HOME/.config/xdg-terminals.list
+  fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Homebrew Install
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
