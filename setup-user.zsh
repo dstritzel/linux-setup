@@ -2,7 +2,7 @@
 
 # TODO: Consider Using .env file and generate values from there
 GIT_USER=${GIT_USER:-"dstritzel"}
-BREW_PACKAGES=${BREW_PACKAGES:-"pyenv pyenv-virtualenv nvm neovim gh neovim"}
+BREW_PACKAGES=${BREW_PACKAGES:-"pyenv pyenv-virtualenv nvm neovim gh neovim fzf tldr"}
 PYTHON_VERSION=${PYTHON_VERSION:-"3.13.3"}
 PIP_PACKAGES=${PIP_PACKAGES:-"neovim"}
 NODE_PACKAGES=${NODE_PACKAGES:-"neovim"}
@@ -42,7 +42,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Homebrew Install
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # Install Kitty
+  # Install Kitty (Might consider iTerm2 if compatability works)
   brew install kitty
 else
   echo "Unknown OS = $OSTYPE"
@@ -65,9 +65,13 @@ curl https://github.com/${GIT_USER}.keys | tee -a $HOME/.ssh/authorized_keys
 
 # Brew Installs
 brew install ${BREW_PACKAGES}
+omz reload
+
+# Install Python and set it as our user default
+pyenv install ${PYTHON_VERSION}
+pyenv global ${PYTHON_VERSION}
 
 # NVM and Node
-#curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 nvm install ${NODE_VERSION}
 nvm use ${NODE_VERSION}
 
